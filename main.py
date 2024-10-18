@@ -9,9 +9,9 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
 # 1. 加载预训练的 LLaMA 模型和 tokenizer
-model_name="CausalLM/14B"
-tokenizer = AutoTokenizer.from_pretrained(model_name, token="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")
-model = AutoModelForCausalLM.from_pretrained(model_name, load_in_8bit=True).to(device)
+model_name="cognitivecomputations/dolphin-2.9.3-qwen2-1.5b"
+tokenizer = AutoTokenizer.from_pretrained(model_name, token="your hf token")
+model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
 
 #使用本地模型和配置
 #model = AutoModelForCausalLM.from_pretrained("./pretrained", local_files_only=True, load_in_8bit=True).to(device)
@@ -22,7 +22,7 @@ lora_config = LoraConfig(
     lora_alpha=32, 
     lora_dropout=0.1, 
     bias="none", 
-    task_type="CAUSAL_LM"
+    task_type="dolphin"
 )
 
 # 3. 将模型转换为可微调的 LoRA 模型
@@ -31,11 +31,13 @@ model.print_trainable_parameters()  # 检查微调的参数
 
 # 4. 准备训练数据集
 # 这里我们使用 Hugging Face 的 datasets 库加载一个简单的样本数据集
-dataset = load_dataset("text", data_files={"train": "./dataset-modified.txt"})
+dataset = load_dataset("text", data_files={"train": "./data.txt","test": "./test.txt"})
 
 # 数据预处理：tokenizer 处理输入文本
 def preprocess_function(examples):
-    return tokenizer(examples['text'], padding="max_length", truncation=True, max_length=128)
+    tokenized = tokenizer(examples['text'], padding="max_length", truncation=True, max_length=128)
+    tokenized["labels"] = tokenized["input_ids"].copy()  # 将 input_ids 作为 labels
+    return tokenized
 
 train_dataset = dataset["train"].map(preprocess_function, batched=True)
 test_dataset = dataset["test"].map(preprocess_function, batched=True)
