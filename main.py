@@ -18,7 +18,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True)
 
 # 2. 配置 LoRA
 lora_config = LoraConfig(
-    r=1, 
+    r=4, 
     target_modules=["q_proj","o_proj","k_proj","v_proj","gate_proj","up_proj","down_proj"],
     lora_alpha=32, 
     lora_dropout=0.1, 
@@ -33,15 +33,8 @@ model.print_trainable_parameters()  # 检查微调的参数
 
 # 4. 准备训练数据集
 # 这里我们使用 Hugging Face 的 datasets 库加载一个简单的样本数据集
-dataset = load_dataset("text", data_files={"train": "/home/astonomy/lora/dataset/data.txt","test": "/home/astonomy/lora/dataset/test.txt"})
+dataset = load_dataset("text", data_files={"train": "lora/dataset/data.txt","test": "lora/dataset/test.txt"})
 
-'''
-# 数据预处理：tokenizer 处理输入文本
-def preprocess_function(examples):
-    tokenized = tokenizer(examples['text'], padding="max_length", truncation=True, max_length=128)
-    tokenized["labels"] = tokenized["input_ids"].copy()  # 将 input_ids 作为 labels
-    return tokenized
-'''
 def preprocess_function(examples):
     return tokenizer(examples["text"], truncation = True, padding = True)
 
