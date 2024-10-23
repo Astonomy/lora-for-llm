@@ -40,4 +40,4 @@ In talk.py
 
 3. It may take a while to load the model, type after cli shows ``` you: ```
 
-4. enter and wait your answer!
+4. Press enter and Wait!

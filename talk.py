@@ -1,29 +1,32 @@
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from safetensors.torch import load_file as load_safetensors
-from peft import PeftModel, LoraConfig, get_peft_model
+from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments, DataCollatorForLanguageModeling
+from datasets import load_dataset
+from peft import LoraConfig, get_peft_model, TaskType
 
 # 定义模型和 LoRA 权重的路径
-model_name = "cognitivecomputations/dolphin-2.9.3-qwen2-0.5b"  # 例如 GPT-2 模型架构
-safetensor_lora_path = "./lora-finetune-llama/checkpoint-2361/adapter_model.safetensors"
+model_name = "openbmb/MiniCPM-1B-sft-bf16"
+safetensor_lora_path = ""
 
 # 加载 tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer.pad_token = tokenizer.eos_token
 
 # 加载模型架构
-model = AutoModelForCausalLM.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True)
 
 # 设置 LoRA 配置
 lora_config = LoraConfig(
-    r=8,                      # LoRA rank
+    r=4,                       # LoRA rank
+    target_modules=["q_proj","o_proj","k_proj","v_proj","gate_proj","up_proj","down_proj"],
     lora_alpha=32,             # LoRA scaling factor
     lora_dropout=0.1,          # Dropout rate
     bias="none",               # 无 bias 适应
-    task_type="CAUSAL_LM"      # 用于因果语言建模任务
+    task_type=TaskType.CAUSAL_LM
 )
 
 # 将模型转换为支持 LoRA 的模型
 model = get_peft_model(model, lora_config)
+model.print_trainable_parameters()  # 检查微调的参数
 
 # 加载 LoRA 权重（也是 safetensors 格式）
 lora_state_dict = load_safetensors(safetensor_lora_path)
@@ -61,4 +64,3 @@ with torch.no_grad():
 # 输出生成的文本
 generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 print(f"Generated text: {generated_text}")
-
