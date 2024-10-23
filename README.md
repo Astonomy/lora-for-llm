@@ -26,15 +26,13 @@ In talk.py
 ```
 
 ## Train Local
-1. ` git clone https://github.com/Astonomy/lora.git `
-
-2. ` pip3 install -r lora/requirements.txt `
-
-3. ` python3 lora/test.py `
-
-> If there's something wrong, try to uninstall cuda and torch, and install your version
-
-4.  ` python3 lora/train.py `
+```shell
+git clone https://github.com/Astonomy/lora.git
+pip3 install -r lora/requirements.txt
+python3 lora/test.py
+# If there's something wrong, try to uninstall cuda and torch, and install your version
+python3 lora/train.py
+```
 
 ## Run Local
 1. ` pip3 install -r lora/requirements.txt ` if you haven't installed required libs
