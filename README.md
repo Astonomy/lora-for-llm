@@ -1,7 +1,43 @@
-使用``` pip3 install -r requirements.txt ```安装该项目使用的python库
+# A lora code frame for openbmb/MiniCPM
 
-使用test.py测试cuda及相应版本的torch是否正确安装
+## Quick Start
+> ** At Least 16G GPU RAM needed for 1B model, 8G GPU RAM for 0.5B model **
 
-若版本不对，则卸载torch和cuda再重新安装
+In train.py
+> change model_name to train the model you want
 
-对于微调huggingface的模型，复制并更换模型卡片的名称
+> change training_args to adapt your training process
+
+> loraed model will be stored in lora/lora-finetuned-llama
+
+In talk.py
+> keep model name the same as train.py
+
+> change safetensor_lora_path to load the lora net you want
+
+## Train with Colab
+> open a new notebook
+
+> ''' !git clone https://github.com/Astonomy/lora.git '''
+
+> ''' !python3 lora/main.py '''
+
+## Train Local
+> ''' git clone https://github.com/Astonomy/lora.git '''
+
+> ''' pip3 install -r lora/requirements.txt '''
+
+> ''' python3 lora/test.py '''
+
+If there's something wrong, try to uninstall cuda and torch, and install your version
+
+>  ''' python3 lora/train.py '''
+
+## Run Local
+> ''' pip3 install -r lora/requirements.txt ''' if you haven't installed required libs
+
+> ''' python3 lora/talk.py '''
+
+> It may take a while to load the model, type after cli shows ''' you: '''
+
+> enter and wait your answer!
