@@ -15,7 +15,7 @@ In talk.py
 
 2. change safetensor_lora_path to load the lora net you want
 
-## Train with Colab
+## Train Colab
 1. open a new notebook
 
 2. run the following command in a code column 
@@ -35,10 +35,9 @@ python3 lora/train.py
 ```
 
 ## Run Local
-1. ` pip3 install -r lora/requirements.txt ` if you haven't installed required libs
-
-2. ` python3 lora/talk.py `
-
-3. It may take a while to load the model, type after cli shows ` you: `
-
-4. Press enter and Wait!
+```shell
+# if you haven't installed required libs,run:
+# pip3 install -r lora/requirements.txt
+python3 lora/talk.py
+```
+It may take a while to load the model, type after cli shows ` you: `, press enter and wait!
