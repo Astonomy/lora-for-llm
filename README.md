@@ -18,28 +18,29 @@ In talk.py
 ## Train with Colab
 1. open a new notebook
 
-2. ``` !git clone https://github.com/Astonomy/lora.git ```
-
-3. ``` pip3 install datasets peft ```
-
-4. ``` !python3 lora/main.py ```
+2. run the following command in a code column 
+```shell
+!git clone https://github.com/Astonomy/lora.git
+!pip3 install datasets peft
+!python3 lora/main.py
+```
 
 ## Train Local
-1. ``` git clone https://github.com/Astonomy/lora.git ```
+1. ` git clone https://github.com/Astonomy/lora.git `
 
-2. ``` pip3 install -r lora/requirements.txt ```
+2. ` pip3 install -r lora/requirements.txt `
 
-3. ``` python3 lora/test.py ```
+3. ` python3 lora/test.py `
 
 > If there's something wrong, try to uninstall cuda and torch, and install your version
 
-4.  ``` python3 lora/train.py ```
+4.  ` python3 lora/train.py `
 
 ## Run Local
-1. ``` pip3 install -r lora/requirements.txt ``` if you haven't installed required libs
+1. ` pip3 install -r lora/requirements.txt ` if you haven't installed required libs
 
-2. ``` python3 lora/talk.py ```
+2. ` python3 lora/talk.py `
 
-3. It may take a while to load the model, type after cli shows ``` you: ```
+3. It may take a while to load the model, type after cli shows ` you: `
 
 4. Press enter and Wait!
