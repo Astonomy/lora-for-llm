@@ -20,7 +20,9 @@ In talk.py
 
 2. ``` !git clone https://github.com/Astonomy/lora.git ```
 
-3. ``` !python3 lora/main.py ```
+3. ``` pip3 install datasets peft ```
+
+4. ``` !python3 lora/main.py ```
 
 ## Train Local
 1. ``` git clone https://github.com/Astonomy/lora.git ```
